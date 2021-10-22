@@ -1,6 +1,3 @@
-# Codingly.io: Base Serverless Framework Template
-
-https://codingly.io
 
 ## What's included
 * Folder structure used consistently across our projects.
@@ -14,5 +11,4 @@ cd YOUR_PROJECT_NAME
 npm install
 ```
 
-You are ready to go!
 # auction_service
