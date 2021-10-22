@@ -1,4 +1,4 @@
-
+# auction_service
 ## What's included
 * Folder structure used consistently across our projects.
 * [serverless-pseudo-parameters plugin](https://www.npmjs.com/package/serverless-pseudo-parameters): Allows you to take advantage of CloudFormation Pseudo Parameters.
@@ -11,4 +11,4 @@ cd YOUR_PROJECT_NAME
 npm install
 ```
 
-# auction_service
+
