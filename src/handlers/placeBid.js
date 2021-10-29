@@ -1,7 +1,6 @@
 import AWS from "aws-sdk";
 import middy from "@middy/core";
 import { getAuctionById } from "./getAuction";
-// import createError from 'http-errors'; //create http error in declaractive way
 
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
@@ -10,6 +9,16 @@ async function placeBid(event, context) {
   const { id } = event.pathParameters;
   const { amount } = JSON.parse(event.body);
   const auction = await getAuctionById(id);
+
+  if (auction.status !== 'OPEN'){
+      const response = {
+        statusCode: 400,
+        body: JSON.stringify(
+          `You cannot bid on closed auctions`
+        ),
+      };
+      return response;
+  }
 
   if (amount <= auction.highestBid.amount){
     const response = {
