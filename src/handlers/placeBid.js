@@ -8,7 +8,24 @@ const dynamodb = new AWS.DynamoDB.DocumentClient();
 async function placeBid(event, context) {
   const { id } = event.pathParameters;
   const { amount } = JSON.parse(event.body);
+  const { email } = event.requestContext.authorizer;
   const auction = await getAuctionById(id);
+
+  if (email === auction.seller){
+    const response = {
+      statusCode: 400,
+      body: JSON.stringify(`You cannot bid on your own auctions`),
+    };
+    return response;
+  }
+
+  if (email === auction.highestBid.bidder) {
+    const response = {
+      statusCode: 400,
+      body: JSON.stringify(`You are already the highest bidder`),
+    };
+    return response;
+  }
 
   if (auction.status !== 'OPEN'){
       const response = {
@@ -31,9 +48,10 @@ async function placeBid(event, context) {
   const params = {
     TableName: process.env.AUCTIONS_TABLE_NAME,
     Key: { id },
-    UpdateExpression: 'set highestBid.amount = :amount',
+    UpdateExpression: 'set highestBid.amount = :amount, highestBid.bidder = :bidder',
     ExpressionAttributeValues: {
       ':amount': amount,
+      ':bidder': email,
     },
     ReturnValues: 'ALL_NEW',
   };
