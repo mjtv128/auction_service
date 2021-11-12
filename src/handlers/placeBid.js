@@ -11,13 +11,13 @@ async function placeBid(event, context) {
   const { email } = event.requestContext.authorizer;
   const auction = await getAuctionById(id);
 
-  if (email === auction.seller){
-    const response = {
-      statusCode: 400,
-      body: JSON.stringify(`You cannot bid on your own auctions`),
-    };
-    return response;
-  }
+  // if (email === auction.seller){
+  //   const response = {
+  //     statusCode: 400,
+  //     body: JSON.stringify(`You cannot bid on your own auctions`),
+  //   };
+  //   return response;
+  // }
 
   if (email === auction.highestBid.bidder) {
     const response = {
