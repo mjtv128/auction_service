@@ -40,7 +40,7 @@ export async function closeAuction(auction){
     MessageBody: JSON.stringify({
       subject: 'Your item has been sold!',
       recipient: seller,
-      body: `Congratulations! Your item ${title} has been sold for ${amount}`,
+      body: `Congratulations! Your item ${title} has been sold for $${amount}!`,
     }),
   }).promise();
 
@@ -50,7 +50,7 @@ export async function closeAuction(auction){
       MessageBody: JSON.stringify({
         subject: "You won an auction",
         recipient: bidder,
-        body: `Yay! You are now the proud owner of ${title} for ${amount}`,
+        body: `Yay! You are now the proud owner of ${title} for $${amount}`,
       }),
     })
     .promise();
